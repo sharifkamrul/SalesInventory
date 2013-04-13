@@ -29,6 +29,8 @@ public class MainFrame extends JFrame implements ActionListener {
 	JButton prdclct = new JButton("Product Collect in ShowRoom");
 	JButton report = new JButton("Show Report");
 	
+	String abcd = null;
+	
 	public void menu() {
 		Container con = getContentPane();
 		con.setLayout(new GridLayout(5,1));
