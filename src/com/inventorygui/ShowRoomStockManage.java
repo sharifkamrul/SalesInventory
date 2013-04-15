@@ -5,7 +5,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
 import com.showroom.ShowRoom;
-import com.wearhouse.WearHouse;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -114,7 +113,7 @@ public class ShowRoomStockManage  extends JFrame implements ActionListener {
 			double sellingRate = Integer.parseInt(tSellingRate.getText());
 			int quantity = Integer.parseInt(tquantity.getText());
 			
-			showroom.prodCollect(prodName, prodCode, barCode, brandName, purchaseRate, sellingRate, quantity, null);
+			showroom.prodCollect(prodName, prodCode, barCode, brandName, purchaseRate, sellingRate, quantity);
 			
 		}
 	};

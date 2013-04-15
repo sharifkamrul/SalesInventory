@@ -1,10 +1,10 @@
-package com.showroom;
+package com.commonfiles;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class SMySQLAccess {
+public class MySQLAccess {
 	
 	//  Database credentials
 	private final String DATABASENAME = "gdlmediasport_fraser2";
@@ -40,33 +40,39 @@ public class SMySQLAccess {
 		}catch (Exception e) {throw e;} 
 	}
 	
-	// sql for insert into  show_room_products
-	public String insertToShowRoomProducts(String prodName,String  prodCode,String barCode,
-			String brandName,double purchaseRate,double sellingRate, int quantity, String sRoomName) {
+	/*sql for insert into  tables
+	 * show_room_products
+	 * ware_house_products
+	 */
+	public String insertToCurrentStock(String tableName, String prodName, String prodCode, String barCode,
+			String brandName, double purchaseRate, double sellingRate, int quantity) {
 		
-		sql = "insert into show_room_products values(NULL,'"+prodName+"','"+prodCode+"','"+
-		barCode+"','"+brandName+"',"+purchaseRate+","+sellingRate+","+quantity+",'"+this.curDate+"','"+sRoomName+"')";
-		//System.out.println(sql);
+		sql = "insert into "+tableName+" values(NULL,'"+prodName+"','"+prodCode+"','"+
+		barCode+"','"+brandName+"',"+purchaseRate+","+sellingRate+","+quantity+",'"+this.curDate+"')";
+		System.out.println(sql);
 		return sql;
 	}
 	
-	// sql for insert into  showroom_stockout_info
-	public String insertToShowRoomStockOUTInfo(String  prodCode,double purchaseRate, double sellingRate,int stockOutQuantity, 
+	/*sql for insert into  
+	 * showroom_stockout_info
+	 * warehouse_stockout_info
+	 */
+	public String insertToStockOUTInfo(String tableName, String  prodCode, double purchaseRate, double sellingRate, int stockOutQuantity, 
 			String sRoomName) {
 		
-		sql = "insert into showroom_stockout_info values(NULL,'"+prodCode+"',"+
+		sql = "insert into "+tableName+" values(NULL,'"+prodCode+"',"+
 		purchaseRate+","+sellingRate+","+stockOutQuantity+",null,'"+this.curDate+"')";
 		//System.out.println(sql);
 		return sql;
 	}
 	
-	public String updateShowRoomProducts(String field, String value) {
-		sql = "update show_room_products set "+field+"='"+value+"'";
+	public String updateSCurrentStock(String tableName, String field, String value) {
+		sql = "update "+tableName+" set "+field+"='"+value+"'";
 		return sql;
 	}
 	
-	public String updateShowRoomProducts(String field, int value) {
-		sql = "update show_room_products set "+field+"="+value;
+	public String updateCurrentStock(String tableName, String field, int value) {
+		sql = "update "+tableName+" set "+field+"="+value;
 		return sql;
 	}
 	

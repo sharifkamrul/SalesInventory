@@ -5,7 +5,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
 import com.commonfiles.Product;
-import com.wearhouse.WearHouse;
+import com.warehouse.WareHouse;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -68,7 +68,7 @@ public class InventoryManage  extends JFrame implements ActionListener {
 	//PANEL CLASS
 	
 	
-	WearHouse wearHouse = new WearHouse();
+	WareHouse wearHouse = new WareHouse();
 	
 //	public InventoryManage() {
 //		super("Inventory Management");

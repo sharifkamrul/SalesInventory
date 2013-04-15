@@ -1,5 +1,6 @@
 package com.showroom;
 
+import com.commonfiles.MySQLAccess;
 import com.commonfiles.Product;
 
 import java.sql.*;
@@ -10,7 +11,7 @@ import javax.swing.JPanel;
 
 public class ShowRoom extends Product {
 	
-	private SMySQLAccess dbAccess = new SMySQLAccess();
+	private MySQLAccess dbAccess = new MySQLAccess();
 	private Connection conn;
 	private Statement stmt;
 	private String sql ;
@@ -19,17 +20,20 @@ public class ShowRoom extends Product {
 	private String[]column = new String[9];
 	
 	private String sRoomName;
+	
+	private String show_room_products = "show_room_products";
+	private String showroom_stockout_info = "showroom_stockout_info";
  
 	//	Add product into show_room_products table
 	public void prodCollect(String prodName, String prodCode, String barCode, 
-			String brandName, double purchaseRate, double sellingRate, int quantity, String sRoomName) {
+			String brandName, double purchaseRate, double sellingRate, int quantity) {
 	
 		try {
 			conn = dbAccess.connectToDataBase();
 			stmt = conn.createStatement();
 			
 			//	insert product detail in show_room_products table 
-			sql = dbAccess.insertToShowRoomProducts(prodName, prodCode, barCode, brandName, purchaseRate, sellingRate, quantity, sRoomName);
+			sql = dbAccess.insertToCurrentStock(show_room_products, prodName, prodCode, barCode, brandName, purchaseRate, sellingRate, quantity);
 			stmt.executeUpdate(sql);
 			
 			JOptionPane.showMessageDialog(null,"Product detail has been added to ShowRoom");
@@ -65,10 +69,10 @@ public class ShowRoom extends Product {
 			
 			if(ac.equals(Product.AC_CURRENTSTOCK)) {
 				column[1] = "sum(quantity) as totalNumOfProd";// Get total number of products
-				sql = dbAccess.selectAll("show_room_products", null, column, null);
+				sql = dbAccess.selectAll(show_room_products, null, column, null);
 			}
 			else if(ac.equals(Product.AC_STOCKOUTINFO)) {
-				sql = dbAccess.selectAll("show_room_products", "showroom_stockout_info", column, "prodCode");
+				sql = dbAccess.selectAll(show_room_products, showroom_stockout_info, column, "prodCode");
 			}
 			else {}
 			
@@ -90,19 +94,19 @@ public class ShowRoom extends Product {
 			
 			if(ac.equals(Product.AC_CURRENTSTOCK)) {
 				// Generate an array and get all product info from show_room_products
-				sql = dbAccess.selectAll("show_room_products", null, null, null);
+				sql = dbAccess.selectAll(show_room_products, null, null, null);
 			}
 			else if(ac.equals(Product.AC_STOCKOUTINFO)) {
-				column[0] = "show_room_products.prodName";
-				column[1] = "show_room_products.prodCode";
-				column[2] = "show_room_products.brandName";
-				column[3] = "showroom_stockout_info.purchaseRate";
-				column[4] = "showroom_stockout_info.sellingRate";
-				column[5] = "showroom_stockout_info.quantity";
-				column[6] = "showroom_stockout_info.Date";
+				column[0] = show_room_products+".prodName";
+				column[1] = show_room_products+".prodCode";
+				column[2] = show_room_products+".brandName";
+				column[3] = showroom_stockout_info+".purchaseRate";
+				column[4] = showroom_stockout_info+".sellingRate";
+				column[5] = showroom_stockout_info+".quantity";
+				column[6] = showroom_stockout_info+".Date";
 				
 				// Generate an array and get all product info from show_room_products joining showroom_stockout_info
-				sql = dbAccess.selectAll("show_room_products", "showroom_stockout_info", column, "prodCode");
+				sql = dbAccess.selectAll(show_room_products, showroom_stockout_info, column, "prodCode");
 			}
 			//System.out.println("Sql "+sql);
 			rs = stmt.executeQuery(sql);
@@ -163,7 +167,7 @@ public class ShowRoom extends Product {
 			column[0] = "quantity";
 			column[1] = "purchaseRate";
 			column[2] = "sellingRate";
-			sql = dbAccess.selectAll("show_room_products", null, column, null);
+			sql = dbAccess.selectAll(show_room_products, null, column, null);
 			sql += " where prodCode='"+prodCode+"'";//System.out.println(sql);
 			rs = stmt.executeQuery(sql);
 			while(rs.next()){
@@ -176,14 +180,14 @@ public class ShowRoom extends Product {
 			
 			//	update product detail in show_room_products table 
 			int new_quantity = curQuantity-stockOutQuantity;
-			sql = dbAccess.updateShowRoomProducts("quantity", new_quantity);
+			sql = dbAccess.updateCurrentStock(show_room_products, "quantity", new_quantity);
 			sql+= " where prodCode='"+prodCode+"'";
 			//System.out.println(sql);
 			stmt.executeUpdate(sql);
 			
 			//	insert relevant info in showroom_stockout_info table to keep stock out info*/
-			sql = dbAccess.insertToShowRoomStockOUTInfo(prodCode, purchaseRate, sellingRate, stockOutQuantity, sRoomName);
-			System.out.println(sql);
+			sql = dbAccess.insertToStockOUTInfo(showroom_stockout_info, prodCode, purchaseRate, sellingRate, stockOutQuantity, sRoomName);
+			//System.out.println(sql);
 			stmt.executeUpdate(sql);
 			//System.out.println("Product sto");
 			

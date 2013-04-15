@@ -3,11 +3,17 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 13, 2013 at 08:04 AM
+-- Generation Time: Apr 15, 2013 at 04:14 PM
 -- Server version: 5.1.33
 -- PHP Version: 5.2.9
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `gdlmediasport_fraser2`
@@ -51,26 +57,22 @@ CREATE TABLE IF NOT EXISTS `show_room_products` (
   `sellingRate` double NOT NULL,
   `quantity` int(11) DEFAULT NULL,
   `Date` date DEFAULT NULL,
-  `sRoomName` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `prodCode` (`prodCode`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 --
 -- Dumping data for table `show_room_products`
 --
 
-INSERT INTO `show_room_products` (`id`, `prodName`, `prodCode`, `barCode`, `brandName`, `purchaseRate`, `sellingRate`, `quantity`, `Date`, `sRoomName`) VALUES
-(2, 'e', '333', '333', 'ee', 34, 34, 3, '2013-04-13', 'null'),
-(3, 'rr', '33', '3', 'dd', 3, 3, 3, '2013-04-13', 'null');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `wearhouse_stockout_info`
+-- Table structure for table `warehouse_stockout_info`
 --
 
-CREATE TABLE IF NOT EXISTS `wearhouse_stockout_info` (
+CREATE TABLE IF NOT EXISTS `warehouse_stockout_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `prodCode` varchar(100) DEFAULT NULL,
   `purchaseRate` double NOT NULL,
@@ -82,17 +84,17 @@ CREATE TABLE IF NOT EXISTS `wearhouse_stockout_info` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 --
--- Dumping data for table `wearhouse_stockout_info`
+-- Dumping data for table `warehouse_stockout_info`
 --
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `wear_house_products`
+-- Table structure for table `ware_house_products`
 --
 
-CREATE TABLE IF NOT EXISTS `wear_house_products` (
+CREATE TABLE IF NOT EXISTS `ware_house_products` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `prodName` varchar(100) DEFAULT NULL,
   `prodCode` varchar(100) NOT NULL,
@@ -107,6 +109,6 @@ CREATE TABLE IF NOT EXISTS `wear_house_products` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 --
--- Dumping data for table `wear_house_products`
+-- Dumping data for table `ware_house_products`
 --
 
